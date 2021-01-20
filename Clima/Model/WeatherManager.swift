@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-protocol WeatherManagerDelegate {
+protocol WeatherManagerDelegate: class {
   func didUpdateDailyWeather(_ weatherManager: WeatherManager, weather: CityWeather)
   func didUpdateWetherForecast(_ weatherManager: WeatherManager, weatherForecast: [WeatherForecast])
   func didFailWithError(error: Error!)
@@ -17,11 +17,11 @@ protocol WeatherManagerDelegate {
 
 
 
-struct WeatherManager {
+class WeatherManager {
   let dailyWeatherURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&appid=484f8b6d115fcc214dd51aa8f37ea476"
   let weatherForecastURL = "https://api.openweathermap.org/data/2.5/onecall?exclude=hourly,minutely,alerts&appid=484f8b6d115fcc214dd51aa8f37ea476&units=metric"
   
-  var delegate: WeatherManagerDelegate?
+  weak var delegate: WeatherManagerDelegate?
   
   func fetchDailyWeather(cityName: String) {
     let urlString = "\(dailyWeatherURL)&q=\(cityName)"
